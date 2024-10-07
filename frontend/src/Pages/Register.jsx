@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import logo from "../assets/logo.svg"
@@ -23,9 +23,14 @@ function Register() {
                 draggable:true,
             }
     const [formData,setFormData] = useState(data);
+    useEffect(()=>{
+      if(localStorage.getItem('chat-app-user')){
+        navigate('/');
+      }
+    },[]);
     const handleSubmit = async (event)=>{
         event.preventDefault();
-        // setFormData(data);   
+        setFormData(data);   
         if(checkFormValidation()){
             const {username,email,password} = formData;
             try{
@@ -84,7 +89,7 @@ function Register() {
                 <input type="password" placeholder='Confirm Password' name="confirmPassword" value={formData.confirmPassword} onChange={event=>handleChange(event)}/>
                 <button type='submit'>Create User</button>
                 <span>
-                    Already have an account? <Link to="/Login">Login</Link>
+                    Already have an account? <Link to="/login">Login</Link>
                 </span>
             </form>
         </FormContainer>
